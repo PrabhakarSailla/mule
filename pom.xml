@@ -50,9 +50,8 @@
                         <workerType>${workerType}</workerType>
                         <workers>${workers}</workers>
                         <objectStoreV2>true</objectStoreV2>
-                        <properties>
-                            <key>value</key>
-                        </properties>
+                        <region>${region}</region>
+                        <skipDeploymentVerification>false</skipDeploymentVerification>
                     </cloudHubDeployment>
                 </configuration>
             </plugin>

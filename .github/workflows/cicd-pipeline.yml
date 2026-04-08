@@ -80,5 +80,6 @@ jobs:
           -Dmule.version="${{ vars.MULE_VERSION || '4.11.2' }}" \
           -Dworkers="1" \
           -DworkerType="MICRO" \
-          -Dregion="us-east-1"
+          -Dregion="us-east-2" \
+          -DskipDeploymentVerification=false
 
