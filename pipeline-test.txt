@@ -1,0 +1,15 @@
+Pipeline Test - Deployment to Anypoint Platform
+
+This file was created to trigger the CI/CD pipeline and test the deployment process.
+Test timestamp: 2026-04-08 17:13:27 IST
+
+Pipeline will deploy to:
+- Development: hello-world-mule-dev
+- Production: hello-world-mule-prod
+
+Credentials configured via GitHub Secrets:
+✓ ANYPOINT_USERNAME
+✓ ANYPOINT_PASSWORD  
+✓ BUSINESS_GROUP
+✓ DEV_ENVIRONMENT
+✓ PROD_ENVIRONMENT
