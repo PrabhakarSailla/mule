@@ -77,7 +77,7 @@ jobs:
           -Danypoint.environment="${{ secrets.DEV_ENVIRONMENT }}" \
           -Danypoint.businessGroup="${{ secrets.BUSINESS_GROUP }}" \
           -Dapplication.name="hello-world-mule-dev" \
-          -Dmule.version="${{ vars.MULE_VERSION || '4.4.0' }}" \
+          -Dmule.version="${{ vars.MULE_VERSION || '4.11.2' }}" \
           -Dworkers="1" \
           -DworkerType="MICRO" \
           -Dregion="us-east-1"
@@ -113,7 +113,7 @@ jobs:
           -Danypoint.environment="${{ secrets.PROD_ENVIRONMENT }}" \
           -Danypoint.businessGroup="${{ secrets.BUSINESS_GROUP }}" \
           -Dapplication.name="hello-world-mule-prod" \
-          -Dmule.version="${{ vars.MULE_VERSION || '4.4.0' }}" \
+          -Dmule.version="${{ vars.MULE_VERSION || '4.11.2' }}" \
           -Dworkers="2" \
           -DworkerType="MICRO" \
           -Dregion="us-east-1"
