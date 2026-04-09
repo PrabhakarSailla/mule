@@ -58,7 +58,7 @@
                 <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <cloudHubDeployment>
+                    <cloudHub2Deployment>
                         <uri>https://anypoint.mulesoft.com</uri>
                         <muleVersion>${mule.version}</muleVersion>
                         <username>${anypoint.username}</username>
@@ -66,12 +66,11 @@
                         <applicationName>${anypoint.applicationName}</applicationName>
                         <environment>${anypoint.environment}</environment>
                         <businessGroup>${anypoint.businessGroup}</businessGroup>
-                        <workerType>${workerType}</workerType>
-                        <workers>${workers}</workers>
-                        <objectStoreV2>true</objectStoreV2>
-                        <region>${region}</region>
-                        <skipDeploymentVerification>false</skipDeploymentVerification>
+                        <target>Cloudhub-US-East-2</target>
+                        <replicas>1</replicas>
+                        <vCores>0.1</vCores>
                         <deploymentTimeout>1200000</deploymentTimeout>
+                        <skipDeploymentVerification>false</skipDeploymentVerification>
                         <properties>
                             <http.port>${http.port}</http.port>
                             <secure.key>${secure.key}</secure.key>
@@ -79,7 +78,7 @@
                             <anypoint.platform.visualizer.displayName>${anypoint.applicationName}</anypoint.platform.visualizer.displayName>
                             <log.level>${log.level}</log.level>
                         </properties>
-                    </cloudHubDeployment>
+                    </cloudHub2Deployment>
                 </configuration>
             </plugin>
         </plugins>
