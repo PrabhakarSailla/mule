@@ -60,13 +60,14 @@
                 <configuration>
                     <cloudHub2Deployment>
                         <uri>https://anypoint.mulesoft.com</uri>
+                        <provider>MC</provider>
+                        <environment>${anypoint.environment}</environment>
+                        <target>Cloudhub-US-East-2</target>
                         <muleVersion>${mule.version}</muleVersion>
                         <username>${anypoint.username}</username>
                         <password>${anypoint.password}</password>
                         <applicationName>${anypoint.applicationName}</applicationName>
-                        <environment>${anypoint.environment}</environment>
                         <businessGroup>${anypoint.businessGroup}</businessGroup>
-                        <target>Cloudhub-US-East-2</target>
                         <replicas>1</replicas>
                         <vCores>0.1</vCores>
                         <deploymentTimeout>1200000</deploymentTimeout>
