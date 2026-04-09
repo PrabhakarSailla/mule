@@ -7,7 +7,7 @@ This repository includes a complete CI/CD pipeline for automatically deploying y
 The CI/CD pipeline consists of three main stages:
 1. **Build** - Compile, test, and package the application
 2. **Deploy to Development** - Automatic deployment to dev environment on master/main branch
-3. **Deploy to Production** - Deployment to production environment after dev deployment succeeds
+3. **Notify** - Report deployment status
 
 ## Prerequisites
 
