@@ -72,7 +72,6 @@
                         <region>${region}</region>
                         <skipDeploymentVerification>false</skipDeploymentVerification>
                         <deploymentTimeout>1200000</deploymentTimeout>
-                        <server>anypoint-exchange-server</server>
                         <properties>
                             <http.port>${http.port}</http.port>
                             <secure.key>${secure.key}</secure.key>
