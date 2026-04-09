@@ -15,6 +15,25 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <app.runtime>4.11.2</app.runtime>
         <mule.maven.plugin.version>4.2.0</mule.maven.plugin.version>
+        
+        <!-- CloudHub Deployment Properties -->
+        <anypoint.username>${env.ANYPOINT_USERNAME}</anypoint.username>
+        <anypoint.password>${env.ANYPOINT_PASSWORD}</anypoint.password>
+        <anypoint.businessGroup>${env.ANYPOINT_BUSINESS_GROUP}</anypoint.businessGroup>
+        <anypoint.environment>Sandbox</anypoint.environment>
+        <anypoint.applicationName>hello-world-mule</anypoint.applicationName>
+        <mule.version>4.11.2</mule.version>
+        <workerType>MICRO</workerType>
+        <workers>1</workers>
+        <region>us-east-2</region>
+        
+        <!-- Application Properties -->
+        <http.port>8081</http.port>
+        <secure.key>${env.SECURE_KEY}</secure.key>
+        
+        <!-- Monitoring and Logging -->
+        <anypoint.monitoring.enabled>true</anypoint.monitoring.enabled>
+        <log.level>INFO</log.level>
     </properties>
 
     <dependencies>
@@ -44,7 +63,7 @@
                         <muleVersion>${mule.version}</muleVersion>
                         <username>${anypoint.username}</username>
                         <password>${anypoint.password}</password>
-                        <applicationName>${application.name}</applicationName>
+                        <applicationName>${anypoint.applicationName}</applicationName>
                         <environment>${anypoint.environment}</environment>
                         <businessGroup>${anypoint.businessGroup}</businessGroup>
                         <workerType>${workerType}</workerType>
@@ -52,11 +71,55 @@
                         <objectStoreV2>true</objectStoreV2>
                         <region>${region}</region>
                         <skipDeploymentVerification>false</skipDeploymentVerification>
+                        <deploymentTimeout>1200000</deploymentTimeout>
+                        <server>anypoint-exchange-server</server>
+                        <properties>
+                            <http.port>${http.port}</http.port>
+                            <secure.key>${secure.key}</secure.key>
+                            <anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
+                            <anypoint.platform.visualizer.displayName>${anypoint.applicationName}</anypoint.platform.visualizer.displayName>
+                            <log.level>${log.level}</log.level>
+                        </properties>
                     </cloudHubDeployment>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+    
+    <!-- Maven Profiles for Different Environments -->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <anypoint.environment>Sandbox</anypoint.environment>
+                <anypoint.applicationName>hello-world-mule-dev</anypoint.applicationName>
+                <workerType>MICRO</workerType>
+                <workers>1</workers>
+                <region>us-east-2</region>
+            </properties>
+        </profile>
+        <profile>
+            <id>staging</id>
+            <properties>
+                <anypoint.environment>Design</anypoint.environment>
+                <anypoint.applicationName>hello-world-mule-staging</anypoint.applicationName>
+                <workerType>SMALL</workerType>
+                <workers>1</workers>
+                <region>us-east-2</region>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <anypoint.environment>Production</anypoint.environment>
+                <anypoint.applicationName>hello-world-mule-prod</anypoint.applicationName>
+                <workerType>SMALL</workerType>
+                <workers>2</workers>
+                <region>us-east-2</region>
+            </properties>
+        </profile>
+    </profiles>
+    
     <repositories>
             <repository>
             <id>anypoint-exchange-v3</id>

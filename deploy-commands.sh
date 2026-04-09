@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# CloudHub Deployment Commands for hello-world-mule
+# Method 1: Command Line Properties
+
+echo "CloudHub Deployment Commands"
+echo "============================"
+echo ""
+
+# Development Deployment
+echo "# Development Environment Deployment:"
+echo "mvn clean deploy -DmuleDeploy \\"
+echo "  -Danypoint.username=your-username \\"
+echo "  -Danypoint.password=your-password \\"
+echo "  -Danypoint.environment=Sandbox \\"
+echo "  -Danypoint.applicationName=hello-world-mule-dev \\"
+echo "  -Danypoint.target=CloudHub-US-East-2 \\"
+echo "  -Danypoint.replicas=1 \\"
+echo "  -DworkerType=MICRO \\"
+echo "  -Dworkers=1 \\"
+echo "  -Dregion=us-east-2"
+echo ""
+
+# Production Deployment
+echo "# Production Environment Deployment:"
+echo "mvn clean deploy -DmuleDeploy \\"
+echo "  -Danypoint.username=your-username \\"
+echo "  -Danypoint.password=your-password \\"
+echo "  -Danypoint.environment=Production \\"
+echo "  -Danypoint.applicationName=hello-world-mule-prod \\"
+echo "  -Danypoint.target=CloudHub-US-East-2 \\"
+echo "  -Danypoint.replicas=2 \\"
+echo "  -DworkerType=SMALL \\"
+echo "  -Dworkers=2 \\"
+echo "  -Dregion=us-east-2"
+echo ""
+
+# With Environment Variables (More Secure)
+echo "# Using Environment Variables (Recommended for CI/CD):"
+echo "# First set environment variables:"
+echo "export ANYPOINT_USERNAME=your-username"
+echo "export ANYPOINT_PASSWORD=your-password"
+echo ""
+echo "# Then deploy:"
+echo "mvn clean deploy -DmuleDeploy \\"
+echo "  -Danypoint.username=\${ANYPOINT_USERNAME} \\"
+echo "  -Danypoint.password=\${ANYPOINT_PASSWORD} \\"
+echo "  -Danypoint.environment=Production \\"
+echo "  -Danypoint.applicationName=hello-world-mule-prod \\"
+echo "  -Danypoint.target=CloudHub-US-East-2 \\"
+echo "  -Danypoint.replicas=2 \\"
+echo "  -DworkerType=SMALL \\"
+echo "  -Dworkers=2 \\"
+echo "  -Dregion=us-east-2"
+echo ""
+
+echo "USAGE INSTRUCTIONS:"
+echo "==================="
+echo "1. Replace 'your-username' with your Anypoint Platform username"
+echo "2. Replace 'your-password' with your Anypoint Platform password"
+echo "3. Adjust environment names as needed (Sandbox, Design, Production, etc.)"
+echo "4. Modify application names to ensure uniqueness in CloudHub"
+echo "5. Choose appropriate worker types and replica counts for your needs"
+echo ""
+
+echo "PARAMETER REFERENCE:"
+echo "==================="
+echo "Environments: Sandbox, Design, Production, etc."
+echo "Worker Types: MICRO, SMALL, MEDIUM, LARGE, XLARGE, XXLARGE"
+echo "Regions: us-east-1, us-east-2, us-west-1, us-west-2, eu-west-1, eu-central-1, ap-southeast-1, ap-southeast-2"
+echo "Targets: CloudHub-US-East-1, CloudHub-US-East-2, CloudHub-US-West-1, CloudHub-US-West-2, CloudHub-EU-West-1, etc."

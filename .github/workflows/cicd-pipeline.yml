@@ -5,6 +5,7 @@ on:
     branches: [ master, main ]
   pull_request:
     branches: [ master, main ]
+  workflow_dispatch:
 
 env:
   MAVEN_OPTS: -Xmx3072m
@@ -62,6 +63,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         
+    - name: Cache Maven dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+        
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
@@ -72,14 +80,79 @@ jobs:
       run: |
         mvn clean deploy ${{ env.MAVEN_CLI_OPTS }} \
           -DmuleDeploy \
+          -Pdev \
           -Danypoint.username="${{ secrets.ANYPOINT_USERNAME }}" \
           -Danypoint.password="${{ secrets.ANYPOINT_PASSWORD }}" \
-          -Danypoint.environment="${{ secrets.DEV_ENVIRONMENT }}" \
+          -Danypoint.environment="${{ vars.DEV_ENVIRONMENT || 'Sandbox' }}" \
           -Danypoint.businessGroup="${{ secrets.BUSINESS_GROUP }}" \
-          -Dapplication.name="hello-world-mule-dev" \
+          -Danypoint.applicationName="hello-world-mule-dev" \
           -Dmule.version="${{ vars.MULE_VERSION || '4.11.2' }}" \
-          -Dworkers="1" \
           -DworkerType="MICRO" \
+          -Dworkers="1" \
           -Dregion="us-east-2" \
+          -Dhttp.port="8081" \
+          -Dsecure.key="${{ secrets.SECURE_KEY || 'defaultSecureKey123!' }}" \
           -DskipDeploymentVerification=false
 
+  deploy-prod:
+    needs: deploy-dev
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+    environment: production
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Cache Maven dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+        
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: mule-application
+        path: target/
+        
+    - name: Deploy to CloudHub 2.0 - Production
+      run: |
+        mvn clean deploy ${{ env.MAVEN_CLI_OPTS }} \
+          -DmuleDeploy \
+          -Pprod \
+          -Danypoint.username="${{ secrets.ANYPOINT_USERNAME }}" \
+          -Danypoint.password="${{ secrets.ANYPOINT_PASSWORD }}" \
+          -Danypoint.environment="${{ vars.PROD_ENVIRONMENT || 'Production' }}" \
+          -Danypoint.businessGroup="${{ secrets.BUSINESS_GROUP }}" \
+          -Danypoint.applicationName="hello-world-mule-prod" \
+          -Dmule.version="${{ vars.MULE_VERSION || '4.11.2' }}" \
+          -DworkerType="SMALL" \
+          -Dworkers="2" \
+          -Dregion="us-east-2" \
+          -Dhttp.port="8081" \
+          -Dsecure.key="${{ secrets.SECURE_KEY || 'defaultSecureKey123!' }}" \
+          -DskipDeploymentVerification=false
+
+  notify:
+    needs: [deploy-dev, deploy-prod]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: Notify deployment status
+      run: |
+        if [[ "${{ needs.deploy-dev.result }}" == "success" && "${{ needs.deploy-prod.result }}" == "success" ]]; then
+          echo "✅ Deployment successful to both Development and Production environments"
+        elif [[ "${{ needs.deploy-dev.result }}" == "success" ]]; then
+          echo "⚠️ Deployment successful to Development but failed in Production"
+        else
+          echo "❌ Deployment failed in Development environment"
+        fi
