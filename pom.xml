@@ -3,7 +3,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mycompany</groupId>
+    <groupId>65ea6e96-c64e-4ca8-8ba7-83eeddbae092</groupId>
     <artifactId>hello-world-mule</artifactId>
     <version>1.0.1</version>
     <packaging>mule-application</packaging>
