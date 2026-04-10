@@ -29,7 +29,7 @@
         
         <!-- Application Properties -->
         <http.port>8081</http.port>
-        <secure.key>${env.SECURE_KEY}</secure.key>
+      
         
         <!-- Monitoring and Logging -->
         <anypoint.monitoring.enabled>true</anypoint.monitoring.enabled>
@@ -58,28 +58,22 @@
                 <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <cloudHub2Deployment>
-                        <uri>https://anypoint.mulesoft.com</uri>
+                    <cloudhub2Deployment>
+                        <!-- target runtime -->
+                        <muleVersion>${app.runtime}</muleVersion>
+                        
+                        <server>anypoint-platform</server>
+                        <!-- application name in CloudHub 2.0 -->
+                        <applicationName>${project.artifactId}</applicationName>
+                        <!-- environment in your org -->
+                        <environment>Sandbox</environment>
                         <provider>MC</provider>
-                        <environment>${anypoint.environment}</environment>
                         <target>Cloudhub-US-East-2</target>
-                        <muleVersion>${mule.version}</muleVersion>
-                        <username>${anypoint.username}</username>
-                        <password>${anypoint.password}</password>
-                        <applicationName>${anypoint.applicationName}</applicationName>
-                        <businessGroup>${anypoint.businessGroup}</businessGroup>
-                        <replicas>1</replicas>
-                        <vCores>0.1</vCores>
-                        <deploymentTimeout>1200000</deploymentTimeout>
-                        <skipDeploymentVerification>false</skipDeploymentVerification>
-                        <properties>
-                            <http.port>${http.port}</http.port>
-                            <secure.key>${secure.key}</secure.key>
-                            <anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
-                            <anypoint.platform.visualizer.displayName>${anypoint.applicationName}</anypoint.platform.visualizer.displayName>
-                            <log.level>${log.level}</log.level>
-                        </properties>
-                    </cloudHub2Deployment>
+                        <!-- CloudHub 2.0 region -->
+                        <!-- instance size -->
+                         <replicas>1</replicas>
+                            <vCores>0.2</vCores>
+                    </cloudhub2Deployment>
                 </configuration>
             </plugin>
         </plugins>
