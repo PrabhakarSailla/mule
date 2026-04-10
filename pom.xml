@@ -101,16 +101,7 @@
                 <region>us-east-2</region>
             </properties>
         </profile>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <anypoint.environment>Production</anypoint.environment>
-                <anypoint.applicationName>hello-world-mule-prod</anypoint.applicationName>
-                <workerType>SMALL</workerType>
-                <workers>2</workers>
-                <region>us-east-2</region>
-            </properties>
-        </profile>
+       
     </profiles>
     
     <repositories>
