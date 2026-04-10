@@ -99,6 +99,7 @@ jobs:
           -Danypoint.password="${{ secrets.ANYPOINT_PASSWORD }}" \
           -Dmulesoft.username="${{ secrets.ANYPOINT_USERNAME }}" \
           -Dmulesoft.password="${{ secrets.ANYPOINT_PASSWORD }}" \
+          -DskipExchange=true \
           -DskipDeploymentVerification=false \
           -X
 

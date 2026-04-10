@@ -26,6 +26,7 @@ mvn clean deploy -DmuleDeploy \
   -Danypoint.password="$ANYPOINT_PASSWORD" \
   -Dmulesoft.username="$ANYPOINT_USERNAME" \
   -Dmulesoft.password="$ANYPOINT_PASSWORD" \
+  -DskipExchange=true \
   -X
 
 echo "Deployment completed!"
