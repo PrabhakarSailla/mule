@@ -94,18 +94,11 @@ jobs:
         echo "Starting deployment to Development environment..."
         mvn clean deploy ${{ env.MAVEN_CLI_OPTS }} \
           -DmuleDeploy \
-          -Pdev \
+          --settings ./settings.xml \
           -Danypoint.username="${{ secrets.ANYPOINT_USERNAME }}" \
           -Danypoint.password="${{ secrets.ANYPOINT_PASSWORD }}" \
-          -Danypoint.environment="${{ vars.DEV_ENVIRONMENT || 'Sandbox' }}" \
-          -Danypoint.businessGroup="${{ secrets.BUSINESS_GROUP }}" \
-          -Danypoint.applicationName="hello-world-mule-dev" \
-          -Dmule.version="${{ vars.MULE_VERSION || '4.11.2' }}" \
-          -Dtarget="Cloudhub-US-East-2" \
-          -Dreplicas="1" \
-          -DvCores="0.1" \
-          -Dhttp.port="8081" \
-          -Dsecure.key="${{ secrets.SECURE_KEY || 'defaultSecureKey123!' }}" \
+          -Dmulesoft.username="${{ secrets.ANYPOINT_USERNAME }}" \
+          -Dmulesoft.password="${{ secrets.ANYPOINT_PASSWORD }}" \
           -DskipDeploymentVerification=false \
           -X
 
