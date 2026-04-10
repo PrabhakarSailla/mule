@@ -16,17 +16,6 @@
         <app.runtime>4.11.2</app.runtime>
         <mule.maven.plugin.version>4.2.0</mule.maven.plugin.version>
         
-        <!-- CloudHub Deployment Properties -->
-        <anypoint.username>${env.ANYPOINT_USERNAME}</anypoint.username>
-        <anypoint.password>${env.ANYPOINT_PASSWORD}</anypoint.password>
-        <anypoint.businessGroup>${env.ANYPOINT_BUSINESS_GROUP}</anypoint.businessGroup>
-        <anypoint.environment>Sandbox</anypoint.environment>
-        <anypoint.applicationName>hello-world-mule</anypoint.applicationName>
-        <mule.version>4.11.2</mule.version>
-        <workerType>MICRO</workerType>
-        <workers>1</workers>
-        <region>us-east-2</region>
-        
         <!-- Application Properties -->
         <http.port>8081</http.port>
       
