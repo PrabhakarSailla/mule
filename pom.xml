@@ -62,7 +62,7 @@
                         <!-- target runtime -->
                         <muleVersion>${app.runtime}</muleVersion>
                         
-                        <server>anypoint-platform</server>
+                        <server>anypoint-exchange-v3</server>
                         <!-- application name in CloudHub 2.0 -->
                         <applicationName>${project.artifactId}</applicationName>
                         <!-- environment in your org -->
