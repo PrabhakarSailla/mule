@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
-    <localRepository/>
-    <interactiveMode/>
-    <offline/>
-    <pluginGroups/>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 
+          https://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <!-- Server configurations for deployment -->
     <servers>
-		
-		<server>
-			<id>anypoint-exchange-v3</id>
-			<username>~~~Client~~~</username>
-			<password>2d78020ababa4d0aa8a7f3538946768f~?~D5142159Aa3546059630dE1B2F82468B</password>
-		</server>
-	</servers>
-    <mirrors/>
-    <proxies/>
-    <profiles/>
-    <activeProfiles/>
+        <server>
+            <id>anypoint-platform</id>
+            <username>${env.ANYPOINT_USERNAME}</username>
+            <password>${env.ANYPOINT_PASSWORD}</password>
+        </server>
+        
+        <!-- Anypoint Exchange Repository Server -->
+        <server>
+            <id>anypoint-exchange-v3</id>
+            <username>${env.ANYPOINT_USERNAME}</username>
+            <password>${env.ANYPOINT_PASSWORD}</password>
+        </server>
+    </servers>
+
 </settings>

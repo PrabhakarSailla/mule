@@ -1,0 +1,86 @@
+name: Deploy to CloudHub 2.0
+
+on:
+  push:
+    branches: [ master, main ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target Environment'
+        required: true
+        default: 'Sandbox'
+        type: choice
+        options:
+          - Sandbox
+          - Design
+          - Production
+
+env:
+  MAVEN_OPTS: -Xmx3072m
+  MAVEN_CLI_OPTS: --batch-mode --errors --fail-at-end --show-version
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Cache Maven Dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+        
+    - name: Validate Project
+      run: mvn clean validate ${{ env.MAVEN_CLI_OPTS }}
+      
+    - name: Compile Project
+      run: mvn clean compile ${{ env.MAVEN_CLI_OPTS }}
+      
+    - name: Run Tests
+      run: mvn test ${{ env.MAVEN_CLI_OPTS }}
+      
+    - name: Package Application
+      run: mvn package ${{ env.MAVEN_CLI_OPTS }} -DskipTests
+      
+    - name: Deploy to CloudHub 2.0
+      run: |
+        echo "🚀 Starting deployment to CloudHub 2.0..."
+        mvn deploy ${{ env.MAVEN_CLI_OPTS }} \
+          -DmuleDeploy \
+          -Danypoint.username="${{ secrets.ANYPOINT_USERNAME }}" \
+          -Danypoint.password="${{ secrets.ANYPOINT_PASSWORD }}" \
+          -Danypoint.businessGroup="${{ secrets.ANYPOINT_BUSINESS_GROUP }}" \
+          -Dmule.env="${{ github.event.inputs.environment || 'Sandbox' }}" \
+          -DskipTests
+          
+    - name: Deployment Status
+      run: |
+        echo "✅ Deployment completed successfully!"
+        echo "🌐 Application: hello-world-mule"
+        echo "📍 Environment: ${{ github.event.inputs.environment || 'Sandbox' }}"
+        echo "🔗 Check your application at Anypoint Runtime Manager"
+
+  notify:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: Notify Deployment Result
+      run: |
+        if [[ "${{ needs.build-and-deploy.result }}" == "success" ]]; then
+          echo "🎉 SUCCESS: Application deployed successfully to CloudHub 2.0"
+        else
+          echo "❌ FAILED: Deployment failed. Check the logs above for details."
+          exit 1
+        fi

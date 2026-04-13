@@ -92,16 +92,13 @@ jobs:
     - name: Deploy to CloudHub 2.0 - Development
       run: |
         echo "Starting deployment to Development environment..."
-        mvn clean deploy ${{ env.MAVEN_CLI_OPTS }} \
+        mvn clean package mule:deploy ${{ env.MAVEN_CLI_OPTS }} \
           -DmuleDeploy \
-          --settings ./settings.xml \
-          -Danypoint.username="${{ secrets.ANYPOINT_USERNAME }}" \
-          -Danypoint.password="${{ secrets.ANYPOINT_PASSWORD }}" \
-          -Dmulesoft.username="${{ secrets.ANYPOINT_USERNAME }}" \
-          -Dmulesoft.password="${{ secrets.ANYPOINT_PASSWORD }}" \
-          -DskipExchange=true \
-          -DskipDeploymentVerification=false \
-          -X
+          -s settings.xml \
+          -DskipTests
+      env:
+        ANYPOINT_USERNAME: ${{ secrets.ANYPOINT_USERNAME }}
+        ANYPOINT_PASSWORD: ${{ secrets.ANYPOINT_PASSWORD }}
 
   notify:
     needs: [deploy-dev]

@@ -48,20 +48,22 @@
                 <extensions>true</extensions>
                 <configuration>
                     <cloudhub2Deployment>
-                        <!-- target runtime -->
+                        <uri>https://anypoint.mulesoft.com</uri>
                         <muleVersion>${app.runtime}</muleVersion>
-                        
-                        <server>anypoint-exchange-v3</server>
-                        <!-- application name in CloudHub 2.0 -->
+                        <server>anypoint-platform</server>
                         <applicationName>${project.artifactId}</applicationName>
-                        <!-- environment in your org -->
                         <environment>Sandbox</environment>
-                        <provider>MC</provider>
+                        <businessGroup>65ea6e96-c64e-4ca8-8ba7-83eeddbae092</businessGroup>
                         <target>Cloudhub-US-East-2</target>
-                        <!-- CloudHub 2.0 region -->
-                        <!-- instance size -->
-                         <replicas>1</replicas>
-                            <vCores>0.2</vCores>
+                        <provider>MC</provider>
+                        <replicas>1</replicas>
+                        <vCores>0.2</vCores>
+                        <deploymentTimeout>1000000</deploymentTimeout>
+                        <properties>
+                            <http.port>8081</http.port>
+                            <anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
+                            <anypoint.platform.visualizer.displayName>${project.artifactId}</anypoint.platform.visualizer.displayName>
+                        </properties>
                     </cloudhub2Deployment>
                 </configuration>
             </plugin>
