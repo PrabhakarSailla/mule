@@ -58,7 +58,7 @@
                         <provider>MC</provider>
                         <replicas>1</replicas>
                         <vCores>0.2</vCores>
-                        <deploymentTimeout>1000000</deploymentTimeout>
+                      
                         <properties>
                             <http.port>8081</http.port>
                             <anypoint.platform.config.analytics.agent.enabled>true</anypoint.platform.config.analytics.agent.enabled>
@@ -70,38 +70,13 @@
         </plugins>
     </build>
     
-    <!-- Maven Profiles for Different Environments -->
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <anypoint.environment>Sandbox</anypoint.environment>
-                <anypoint.applicationName>hello-world-mule-dev</anypoint.applicationName>
-                <workerType>MICRO</workerType>
-                <workers>1</workers>
-                <region>us-east-2</region>
-            </properties>
-        </profile>
-        <profile>
-            <id>staging</id>
-            <properties>
-                <anypoint.environment>Design</anypoint.environment>
-                <anypoint.applicationName>hello-world-mule-staging</anypoint.applicationName>
-                <workerType>SMALL</workerType>
-                <workers>1</workers>
-                <region>us-east-2</region>
-            </properties>
-        </profile>
-       
-    </profiles>
-    
     <repositories>
-            <repository>
+            <!-- <repository>
             <id>anypoint-exchange-v3</id>
             <name>Anypoint Exchange</name>
             <url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
             <layout>default</layout>
-        </repository>
+        </repository> -->
         <repository>
             <id>mulesoft-releases</id>
             <name>MuleSoft Releases Repository</name>
