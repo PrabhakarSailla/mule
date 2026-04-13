@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>65ea6e96-c64e-4ca8-8ba7-83eeddbae092</groupId>
-    <artifactId>hello-world-mule</artifactId>
-    <version>1.0.1</version>
+    <artifactId>hello-world-mule-demo</artifactId>
+    <version>1.0.2</version>
     <packaging>mule-application</packaging>
 
     <name>hello-world-mule</name>
